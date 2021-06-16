@@ -1,6 +1,31 @@
 <template>
+
   <v-app>
-    <div class="controls" style="margin-top:10px">
+
+   
+
+       <v-card
+          class="mx-auto"
+          max-width="600"
+          tile
+        >
+           <v-row
+              align="end"
+              class="fill-height"
+            >
+              <v-col
+              align-self="start"
+                class="pa-0"
+                cols="12">
+
+       
+    <coach-filter @change-filter="setFilters"></coach-filter>
+              </v-col>
+           </v-row>
+       </v-card>
+  
+   
+    <div class="controls" style="margin-top:20px">
         
      <v-btn
       class="ma-2"
@@ -12,7 +37,8 @@
      Refresh
     </v-btn>
 
-        <v-btn link to="/registation"  color="light-green">Register as Coach</v-btn>
+        <v-btn link to="/registation"  color="green"
+      outlined>Register as Coach</v-btn>
       </div>
     <v-card
     class="mx-auto"
@@ -21,7 +47,7 @@
     v-if="hasCoaches"
   >
 
-    <v-list-item v-for="profile in filteredCoaches" :key="profile">
+    <v-list-item v-for="profile in filteredCoaches" :key="profile.id">
       <v-list-item-content>
         <v-card
           class="mx-auto"
@@ -89,15 +115,24 @@
 
 <script>
  import CoachItem from '../../components/coaches/CoachItem.vue';
+ import CoachFilter from '../../components/coaches/CoachFilter.vue';
+
 export default {
   name: 'CoachList',
   components: {
-    CoachItem
+    CoachItem,
+    CoachFilter
   },
    data () {
       return {
         loader: null,
         loading: false,
+
+      activeFilters: {
+        frontend: true,
+        backend: true,
+        career: true,
+      },
        
       }
     },
@@ -115,13 +150,36 @@ export default {
  
 
   computed: {
+
     filteredCoaches() {
-      return this.$store.getters['coaches'];
+      const coaches  = this.$store.getters['coaches'];
+        return coaches.filter((coach) => {
+        if (this.activeFilters.frontend && coach.areas.includes('FRONT-END')) {
+          return true;
+        }
+        if (this.activeFilters.backend && coach.areas.includes('BACK-END')) {
+          return true;
+        }
+        if (this.activeFilters.career && coach.areas.includes('CAREER')) {
+          return true;
+        }
+        return false;
+      });
+
+
+
+
     },
     hasCoaches() {
       return this.$store.getters['hasCoaches'];
     }
   },
+   methods: {
+    setFilters(updatedFilters) {
+      this.activeFilters = updatedFilters;
+    },
+  },
+  
 };
 
 

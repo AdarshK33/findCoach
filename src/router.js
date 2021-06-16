@@ -26,9 +26,10 @@ let routes = [{
         component: CoachesList
     },
     {
-        path: '/coach-detail',
+        path: '/coach-detail/:id',
         name: 'CoachDetail',
         component: CoachDetail,
+        props: true,
         children: [{
                 path: 'contact',
                 name: 'ContactCoach',

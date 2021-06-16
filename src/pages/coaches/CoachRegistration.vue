@@ -7,7 +7,7 @@
       v-model="name"
       :error-messages="nameErrors"
       :counter="20"
-      label="Name"
+      label="FirstName"
       required
       @input="$v.name.$touch()"
       @blur="$v.name.$touch()"

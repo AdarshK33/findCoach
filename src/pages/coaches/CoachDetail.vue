@@ -1,10 +1,68 @@
 <template>
-<v-app>
-  DETAILS FOR COACH
+<div>
+   <b-row>
+        <b-col></b-col>
+      <b-col>
+  
+  <section>
+    <v-card>
+      <h2>{{ fullName }}</h2>
+      <h5>${{ rate }}/hour</h5>
+    </v-card>
+  </section>
+  <section>
+    <v-card>
+      <header style="margin-top:20px;margin-bottom:20px;">
+        <h2>Interested? Reach out now!</h2>
+        <v-btn  
+        :to="contactLink" 
+        
+        rounded
+        color="primary"
+        >Contact
+        </v-btn>
 
-  <router-view></router-view>
-  <router-link to="/coaches/c1/contact">Contact</router-link>
-  </v-app>
+      </header>
+        <router-view></router-view>
+    </v-card>
+  </section>  
+    <v-card>
+      <span v-for="area in areas" :key="area" :type="area" :title="area">
+         <v-chip
+      class="ma-2"
+      color="error"
+       style="margin-right:20px"
+    >
+      {{ area}}
+         </v-chip>
+      </span>
+        
+     
+      <p>{{ description }}</p>
+      <v-card-actions>
+      <v-list-item class="grow">
+        <v-list-item-avatar color="grey darken-3">
+          <v-img
+            class="elevation-6"
+            alt=""
+            src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+          ></v-img>
+        </v-list-item-avatar>
+
+        
+      
+      </v-list-item>
+    </v-card-actions>
+    </v-card>
+     </b-col>
+        <b-col></b-col>
+      </b-row>
+
+</div>
+  
+
+
+
 
 </template>
 
@@ -15,9 +73,40 @@
 
 export default {
   name: 'CoachDetails',
+  props:['id'],
+  data() {
+    return {
+      selectedCoach: null,
+    };
+  },
+  computed: {
+    fullName() {
+      return this.selectedCoach.firstName + ' ' + this.selectedCoach.lastName;
+    },
+    areas() {
+      return this.selectedCoach.areas;
+    },
+    rate() {
+      return this.selectedCoach.hourlyRate;
+    },
+    description() {
+      return this.selectedCoach.description;
+    },
+    contactLink() {
+      return this.$route.path + '/' + this.id + '/contact';
+    }
+  },
+  created() {
+    this.selectedCoach = this.$store.getters['coaches'].find(
+      (coach) => coach.id === this.id
+    );
+  },
 }
 </script>
 
 
 <style scoped>
+a{
+  height: 0vh;
+}
 </style>
