@@ -9,8 +9,18 @@
       :counter="20"
       label="FirstName"
       required
+      
       @input="$v.name.$touch()"
       @blur="$v.name.$touch()"
+    ></v-text-field>
+    <v-text-field
+      v-model="last"
+      :error-messages="lastErrors"
+      :counter="20"
+      label="LastName"
+      required
+      @input="$v.last.$touch()"
+      @blur="$v.last.$touch()"
     ></v-text-field>
     <v-text-field
       v-model="email"
@@ -20,26 +30,68 @@
       @input="$v.email.$touch()"
       @blur="$v.email.$touch()"
     ></v-text-field>
+   
+ <v-text-field
+      v-model="Description"
+      :error-messages="DescriptionErrors"
+      :counter="200"
+      label="Description"
+      required
+      outlined
+      height="100px"
+      width="100px"
+     
+      @input="$v.Description.$touch()"
+      @blur="$v.Description.$touch()"
+    ></v-text-field>
+   
 
-    
-    <v-select
-      v-model="select"
-      :items="items"
-      :error-messages="selectErrors"
-      label="Course"
+
+     <v-text-field
+      v-model="rate"
+      :error-messages="rateErrors"
+        :counter="3"
+      label="rate"
+      value="10"
+      prefix="$"
+      type="number"
       required
-      @change="$v.select.$touch()"
-      @blur="$v.select.$touch()"
-    ></v-select>
+      @input="$v.rate.$touch()"
+      @blur="$v.rate.$touch()"
+    ></v-text-field>
+
     <v-checkbox
-      v-model="checkbox"
-      :error-messages="checkboxErrors"
-      label="Do you agree?"
+      v-model="Frontend"
+      :error-messages="FrontendErrors"
+      label="Frontend"
       required
-      @change="$v.checkbox.$touch()"
-      @blur="$v.checkbox.$touch()"
+      @change="$v.Frontend.$touch()"
+      @blur="$v.Frontend.$touch()"
     ></v-checkbox>
 
+    <v-checkbox
+      v-model="Backend"
+      :error-messages="BackendErrors"
+      label="Backend"
+      required
+      @change="$v.Backend.$touch()"
+      @blur="$v.Backend.$touch()"
+    ></v-checkbox>
+
+
+   <v-checkbox
+      v-model="Carrer"
+      :error-messages="CarrerErrors"
+      label="Carrer"
+      required
+      @change="$v.Carrer.$touch()"
+      @blur="$v.Carrer.$touch()"
+    ></v-checkbox>
+
+    
+  
+    
+   
     <v-btn
       class="mr-4"
       @click="submit"
@@ -78,8 +130,13 @@ export default {
 
     validations: {
       name: { required, maxLength: maxLength(20) },
+      last:{ required, maxLength: maxLength(20) },
       email: { required, email },
-      select: { required },
+     
+     
+      rate:{required,maxLength: maxLength(3)},
+      Description:{required ,maxLength: maxLength(200)},
+      
       checkbox: {
         checked (val) {
           return val
@@ -89,35 +146,53 @@ export default {
 
     data: () => ({
       name: '',
+      last:'',
       email: '',
+      Description:'',
+      rate:'',
       select: null,
-      items: [
-        'Frontend',
-        'Backend',
-        'Carrer'
-      
-      ],
-      checkbox: false,
+      Frontend:[],
+      Backend:[],
+      Carrer:[],
     }),
 
     computed: {
-      checkboxErrors () {
-        const errors = []
-        if (!this.$v.checkbox.$dirty) return errors
-        !this.$v.checkbox.checked && errors.push('You must agree to continue!')
-        return errors
-      },
-      selectErrors () {
-        const errors = []
-        if (!this.$v.select.$dirty) return errors
-        !this.$v.select.required && errors.push('Item is required')
-        return errors
-      },
+
+      // checkboxErrors () {
+      //   const errors = []
+      //   if (!this.$v.checkbox.$dirty) return errors
+      //   !this.$v.checkbox.checked && errors.push('You must agree to continue!')
+      //   return errors
+      // },
+       
+   
+     
       nameErrors () {
         const errors = []
         if (!this.$v.name.$dirty) return errors
-        !this.$v.name.maxLength && errors.push('Name must be at most 20 characters long')
-        !this.$v.name.required && errors.push('Name is required.')
+        !this.$v.name.maxLength && errors.push('FirstName must be at most 20 characters long')
+        !this.$v.name.required && errors.push('FirstName is required.')
+        return errors
+      },
+        lastErrors () {
+        const errors = []
+        if (!this.$v.last.$dirty) return errors
+        !this.$v.last.maxLength && errors.push('LastName must be at most 20 characters long')
+        !this.$v.last.required && errors.push('LastName is required.')
+        return errors
+      },
+       DescriptionErrors () {
+        const errors = []
+        if (!this.$v.Description.$dirty) return errors
+        !this.$v.Description.maxLength && errors.push('Description must be at most 200 characters long')
+        !this.$v.Description.required && errors.push('Description is required.')
+        return errors
+      },
+       rateErrors () {
+        const errors = []
+        if (!this.$v.rate.$dirty) return errors
+        !this.$v.rate.maxLength && errors.push('rate must be at most in $')
+        !this.$v.rate.required && errors.push('rate is required.')
         return errors
       },
       emailErrors () {
@@ -132,15 +207,22 @@ export default {
     methods: {
       submit () {
         this.$v.$touch()
-        alert("SUCCESS!! :-)\n\n" + "    "+"Name:"+(this.name)+ "     "+"email:"+ this.email+ "     "+"Course:"+this.select);
+        alert("SUCCESS!! :-)\n\n" + "    "+"Name:"+(this.name)+ "     "+"email:"+ this.email+ "    "+"description:"+this.Description +  " "+"rate:"+this.rate);
       },
       clear () {
         this.$v.$reset()
         this.name = ''
         this.email = ''
-        this.select = null
-        this.checkbox = false
+        this.Description=''
+        this.rate=''
+        this.Frontend=''
+        this.Backend=''
+        this.Carrer=''
+      
       },
     },
   }
 </script>
+<style scoped>
+
+</style>

@@ -6,14 +6,14 @@
   
   <section>
     <v-card>
-      <h2>{{ fullName }}</h2>
-      <h5>${{ rate }}/hour</h5>
+      <h2  style="margin-bottom:20px">{{ fullName }}</h2>
+      <h5 style="margin-bottom:20px">${{ rate }}/hour</h5>
     </v-card>
   </section>
   <section>
     <v-card>
-      <header style="margin-top:20px;margin-bottom:20px;">
-        <h2>Interested? Reach out now!</h2>
+      <header style="margin-top:20px;margin-bottom:20px; height:150px">
+        <h2 style="margin-bottom:20px">Interested? Reach out now!</h2>
         <v-btn  
         :to="contactLink" 
         
@@ -38,7 +38,7 @@
       </span>
         
      
-      <p>{{ description }}</p>
+      <p style="margin-top:20px;text-align:justify padding-left:20px;padding-right:20px">{{ description }}</p>
       <v-card-actions>
       <v-list-item class="grow">
         <v-list-item-avatar color="grey darken-3">
