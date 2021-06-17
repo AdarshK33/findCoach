@@ -127,7 +127,11 @@ export default {
         this.$v.$touch()
        alert("SUCCESS!! :-)\n\n" + "     "+"email:"+ this.email+ "    "+"description:"+this.Description +  " "+"rate:"+this.rate +"Carrer" +this.Carrer);
         
-        
+        console.log( this.$store.dispatch('requests/contactCoach', {
+        email: this.email,
+        message: this.Description,
+        coachId: this.$route.params.id
+      }))
         
       this.$store.dispatch('requests/contactCoach', {
         email: this.email,

@@ -63,7 +63,7 @@ const store = new Vuex.Store({
                 method: 'POST',
                 body: JSON.stringify(newRequest)
             });
-
+            console.log(response)
             const responseData = await response.json();
 
             if (!response.ok) {

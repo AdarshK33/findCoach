@@ -9,6 +9,7 @@
         <h2>Requests Received</h2>
       </header>
       <span v-if="isLoading"></span>
+
       <ul v-else-if="hasRequests && !isLoading">
         <request-item
           v-for="req in receivedRequests"
@@ -38,7 +39,7 @@ export default {
   },
   computed: {
     receivedRequests() {
-      return this.$store.getters['requests/'];
+      return this.$store.getters['requests'];
     },
     hasRequests() {
       return this.$store.getters['hasRequests'];
@@ -52,7 +53,7 @@ export default {
       this.isLoading = true;
       try {
         console.log("hello");
-        await this.$store.dispatch('requests/fetchRequests');
+        await this.$store.dispatch('fetchRequests');
       } catch (error) {
         this.error = error.message || 'Something failed!';
       }
