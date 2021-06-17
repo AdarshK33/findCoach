@@ -93,7 +93,7 @@ export default {
       return this.selectedCoach.description;
     },
     contactLink() {
-      return this.$route.path + '/' + this.id + '/contact';
+      return this.$route.path + '/' +'/contactDetails';
     }
   },
   created() {

@@ -1,92 +1,153 @@
 <template>
-  <form @submit.prevent="submitForm">
-    <div class="form-control">
-      <label for="email">Your E-Mail</label>
-      <input type="email" id="email" v-model.trim="email" />
-    </div>
-    <div class="form-control">
-      <label for="message">Message</label>
-      <textarea rows="5" id="message" v-model.trim="message"></textarea>
-    </div>
-    <p class="errors" v-if="!formIsValid">Please enter a valid email and non-empty message.</p>
-    <div class="actions">
-      <base-button>Send Message</base-button>
-    </div>
+ <b-row>
+     
+  <form>
+    
+   
+    <v-text-field
+      v-model="email"
+      :error-messages="emailErrors"
+      label="E-mail"
+      required
+      @input="$v.email.$touch()"
+      @blur="$v.email.$touch()"
+    ></v-text-field>
+   
+ <v-text-field
+      v-model="Description"
+      :error-messages="DescriptionErrors"
+      :counter="200"
+      label="Message"
+      required
+      outlined
+      height="100px"
+      width="100px"
+     
+      @input="$v.Description.$touch()"
+      @blur="$v.Description.$touch()"
+    ></v-text-field>
+   
+
+
+
+    
+    
+    <v-btn
+      class="mr-4"
+      @click="submit"
+       color="sucess"
+
+    >
+      Send Message
+    </v-btn>
+    <v-btn
+     @click="clear"
+      color="error"
+      >
+      clear
+    </v-btn>
   </form>
+   
+      </b-row>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      email: '',
-      message: '',
-      formIsValid: true,
-    };
-  },
-  methods: {
-    submitForm() {
-      this.formIsValid = true;
-      if (
-        this.email === '' ||
-        !this.email.includes('@') ||
-        this.message === ''
-      ) {
-        this.formIsValid = false;
-        return;
-      }
-      this.$store.dispatch('requests/contactCoach', {
-        email: this.email,
-        message: this.message,
-        coachId: this.$route.params.id
-      });
-      this.$router.replace('/coaches');
 
-    },
-  },
-};
+
+export default {
+  
+  name: '',
+}
 </script>
 
+
+<script>
+  import { validationMixin } from 'vuelidate'
+  import { required, maxLength, email } from 'vuelidate/lib/validators'
+
+
+  export default {
+    mixins: [validationMixin],
+
+    validations: {
+      name: { required, maxLength: maxLength(20) },
+      last:{ required, maxLength: maxLength(20) },
+      email: { required, email },
+     Frontend:{ required },
+      Backend:{ required },
+      Carrer:{ required },
+      
+     selected:{ required },
+     
+      rate:{required,maxLength: maxLength(3)},
+      Description:{required ,maxLength: maxLength(200)},
+      
+      checkbox: {
+        checked (val) {
+          return val
+        },
+      },
+    },
+
+    data: () => ({
+      name: '',
+      last:'',
+      email: '',
+      Description:'',
+      rate:'',
+      select: null,
+      frontend:[],
+      backend:[],
+    
+    
+    }),
+  
+    computed: {
+     
+       DescriptionErrors () {
+        const errors = []
+        if (!this.$v.Description.$dirty) return errors
+        !this.$v.Description.maxLength && errors.push('Description must be at most 200 characters long')
+        !this.$v.Description.required && errors.push('Description is required.')
+        return errors
+      },
+      
+      emailErrors () {
+        const errors = []
+        if (!this.$v.email.$dirty) return errors
+        !this.$v.email.email && errors.push('Must be valid e-mail')
+        !this.$v.email.required && errors.push('E-mail is required')
+        return errors
+      },
+    },
+
+    methods: {
+     
+      submit () {
+        this.$v.$touch()
+       alert("SUCCESS!! :-)\n\n" + "     "+"email:"+ this.email+ "    "+"description:"+this.Description +  " "+"rate:"+this.rate +"Carrer" +this.Carrer);
+        
+        
+        
+      this.$store.dispatch('requests/contactCoach', {
+        email: this.email,
+        message: this.Description,
+        coachId: this.$route.params.id
+      });
+      this.$router.replace('/requests-received');
+
+      },
+      clear () {
+        this.$v.$reset()
+        
+        this.email = ''
+        this.Description=''
+       
+      },
+        
+    },
+  }
+</script>
 <style scoped>
-form {
-  margin: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  padding: 1rem;
-}
 
-.form-control {
-  margin: 0.5rem 0;
-}
-
-label {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  display: block;
-}
-
-input,
-textarea {
-  display: block;
-  width: 100%;
-  font: inherit;
-  border: 1px solid #ccc;
-  padding: 0.15rem;
-}
-
-input:focus,
-textarea:focus {
-  border-color: #3d008d;
-  background-color: #faf6ff;
-  outline: none;
-}
-
-.errors {
-  font-weight: bold;
-  color: red;
-}
-
-.actions {
-  text-align: center;
-}
 </style>
