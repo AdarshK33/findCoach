@@ -133,7 +133,7 @@ export default {
         coachId: this.$route.params.id
       }))
         
-      this.$store.dispatch('requests/contactCoach', {
+      this.$store.dispatch('contactCoach', {
         email: this.email,
         message: this.Description,
         coachId: this.$route.params.id
