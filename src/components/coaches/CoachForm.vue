@@ -232,8 +232,6 @@ export default {
                   desc: this.Description,
                   rate: this.rate,
                 areas: this.selected,
-                 
-
                 };
         this.$emit('save-data', formData);
 
