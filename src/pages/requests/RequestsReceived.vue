@@ -8,6 +8,9 @@
       <header>
         <h2>Requests Received</h2>
       </header>
+
+
+      
       <span v-if="isLoading"></span>
 
       <ul v-else-if="hasRequests && !isLoading">

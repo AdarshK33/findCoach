@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card style="width:460px">
     <h2 >Find Your Coach</h2>
     <span class="filter-option">
       <input type="checkbox" id="frontend" checked @change="setFilter" />

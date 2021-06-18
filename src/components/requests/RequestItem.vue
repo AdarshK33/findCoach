@@ -3,7 +3,7 @@
     <div>
       <a :href="emailLink">{{ email }}</a>
     </div>
-    <p>{{ message }}</p>
+    <p style="height:100px">{{ message }}</p>
   </li>
 </template>
 

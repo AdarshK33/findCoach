@@ -26,7 +26,7 @@
         <router-view></router-view>
     </v-card>
   </section>  
-    <v-card>
+    <v-card style="margin-top:30px">
       <span v-for="area in areas" :key="area" :type="area" :title="area">
          <v-chip
       class="ma-2"
